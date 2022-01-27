@@ -1,0 +1,36 @@
+version: "3.3"
+services:
+  mongodb:
+    image: mongo:4.4
+    environment:
+      - MONGO_INITDB_ROOT_DATABASE=riders
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example
+    ports:
+      - '27017:27017'
+    volumes:
+      - './mongo-volume:/data/db'
+  backend:
+    build:
+      context: ./backend
+      dockerfile: ../Dockerfile
+    ports:
+      - 3001:3001
+    volumes:
+      - './backend:/app'
+      - '/app/node_modules'
+    environment:
+      - PORT=3001
+      - MONGODB_URI=mongodb://root:example@mongodb:27017/riders?authSource=admin
+      - SECRET_JWT=secret
+    depends_on:
+      - mongodb
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ../Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - './frontend:/app'
+      - '/app/node_modules'
