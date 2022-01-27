@@ -30,6 +30,7 @@ $ git clone https://github.com/mabno/riders-app.git
 $ cd riders-app
 $ docker-compose up
 ```
+Finally navigate to http://localhost:3000
 
 ## Screenshots
 ![Alt text](https://res.cloudinary.com/mabno/image/upload/v1643298495/riders_login.png "Login screen")
